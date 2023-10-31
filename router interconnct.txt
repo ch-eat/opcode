@@ -1,0 +1,49 @@
+Use router to interconncet the two networks and disply the protocols involved in data transfer using the Packet Tracer.
+
+Aim:
+The aim of this practical exercise is to interconnect two LAN networks using a router within Cisco Packet Tracer. Additionally, the objective is to comprehend the protocols and configurations involved in data transfer between these networks.
+
+Theory:
+•	Packet Tracer: Cisco's Packet Tracer is a network simulation tool used for network design, configuration testing, and troubleshooting. It provides a virtual environment for creating and assessing network topologies.
+•	Router: A router is a networking device responsible for connecting different networks and forwarding data packets between them. It operates at the network layer of the OSI model and uses routing protocols to determine optimal data transmission paths.
+
+Steps:
+
+Create the Network Topology:
+
+Launch Packet Tracer and initiate a new project.
+Build two LAN networks, each consisting of at least one switch and one PC.
+Introduce a router into the workspace.
+
+Device Configuration:
+
+Allocate IP addresses and subnet masks to the PCs in each LAN.
+Configure the router's interfaces with IP addresses, enabling communication between the LANs.
+Routing Configuration:
+Access the router's command-line interface (CLI) and configure routing protocols, such as RIP or OSPF, if required, to facilitate dynamic routing between LANs.
+
+Testing:
+Ensure that the devices are powered on and perform tests by pinging PCs across different LANs to verify connectivity.
+
+
+
+Applications:
+
+•	Network Design: Packet Tracer is an invaluable tool for designing intricate network topologies before physical deployment.
+•	Network Configuration Testing: It enables the testing of network configurations and identification of potential issues in a controlled environment.
+•	Education and Training: Packet Tracer is widely utilized in networking courses to offer practical, hands-on experience without requiring physical hardware.
+•	Prototyping: Network engineers use Packet Tracer to prototype network changes or new configurations before implementation on real hardware.
+
+Advantages:
+
+•	Cost-Effective: Packet Tracer is freely available, making it accessible to students and professionals.
+•	Simulation: It offers a realistic network simulation environment, eliminating the need for physical hardware.
+•	User-Friendly: Packet Tracer features a user-friendly interface, making it suitable for individuals at all levels of expertise.
+•	Versatility: Packet Tracer supports a broad range of networking devices, protocols, and configurations.
+
+Output :
+ 
+
+Conclusion:
+
+In summary, this practical exercise within Packet Tracer has successfully demonstrated the process of interconnecting two LAN networks using a router. We configured the devices, established routing, and verified connectivity. Packet Tracer's value as a network simulation tool for design, testing, and educational purposes was underscored. This practical experience enhances our understanding of networking principles and the role of routers in connecting and routing data between networks.

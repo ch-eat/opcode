@@ -1,0 +1,32 @@
+def hamming_code_error_detection(data):
+    # Calculate the parity bits' positions
+    parity_positions = [1, 2, 4]
+
+    # Initialize parity bits
+    parity_bits = [0, 0, 0]
+
+    # Convert the data to a list of integers
+    data_bits = [int(bit) for bit in data]
+
+    # Calculate the parity bits
+    for i, position in enumerate(parity_positions):
+        parity_bits[i] = sum(data_bits[x] for x in range(len(data_bits)) if (x + 1) & position)
+
+    # Calculate the error position
+    error_position = sum([(parity_bits[i] % 2) * (2 ** i) for i in range(3)])
+
+    # Check for errors
+    if error_position > 0:
+        print(f"Error detected at position {error_position}")
+        # Invert the erroneous bit
+        data_bits[error_position - 1] ^= 1
+    else:
+        print("No errors detected.")
+
+    # Return the corrected data with parity bits
+    return ''.join(map(str, data_bits))
+
+# Input from the user
+received_data = input("Enter the received Hamming code (7 bits): ")
+corrected_data = hamming_code_error_detection(received_data)
+print(f"Corrected data with parity bits: {corrected_data}")

@@ -1,0 +1,77 @@
+Aim:
+To create a client-server model in Java for both half-duplex and full-duplex communication and run it on different computers.
+
+Theory:
+
+Client-Server Model: In a client-server model, one computer (the server) provides services, and other computers (the clients) request and use these services. Communication between the server and clients can be either half-duplex (one-way communication) or full-duplex (two-way communication).
+
+Full Duplex Mode:
+
+Steps for Full-Duplex Mode:
+To implement full-duplex communication, you need to create separate threads for sending and receiving messages on both the client and server sides. Here are the steps to convert this code into full-duplex mode:
+Client:
+1.	Create a separate thread for sending messages to the server.
+2.	Create a separate thread for receiving messages from the server.
+3.	These threads should run concurrently, allowing the client to send and receive messages simultaneously.
+4.	Implement proper synchronization mechanisms, such as wait() and notify(), to ensure that the threads don't interfere with each other.
+Server:
+1.	Create a separate thread for sending responses to the client.
+2.	Create a separate thread for receiving messages from the client.
+3.	These threads should run concurrently, allowing the server to send and receive messages simultaneously.
+4.	Implement proper synchronization mechanisms, such as wait() and notify(), to ensure that the threads don't interfere with each other.
+By following these steps and creating separate threads for sending and receiving on both the client and server, you can achieve full-duplex communication, where data flows in both directions simultaneously.
+
+Client :
+import java.net.*;
+import java.io.*;
+
+public class Client {
+    public static void main(String[] args) throws IOException {
+        Socket s = new Socket("localhost", 4999);
+
+        PrintWriter pr = new PrintWriter(s.getOutputStream());
+        pr.println("Is it working");
+        pr.flush();
+
+        InputStreamReader in = new InputStreamReader(s.getInputStream());
+        BufferedReader bf = new BufferedReader(in);
+
+        String str = bf.readLine();
+
+        System.out.println("Server: " + str);
+
+        s.close();
+    }
+}
+
+Server :
+
+import java.net.*;
+import java.io.*;
+
+public class Server {
+    public static void main(String[] args) throws IOException {
+        ServerSocket ss = new ServerSocket(4999);
+        Socket s = ss.accept();
+        System.out.println("Client connected");
+
+        InputStreamReader in = new InputStreamReader(s.getInputStream());
+        BufferedReader bf = new BufferedReader(in);
+
+        String str = bf.readLine();
+        System.out.println("Client: " + str);
+
+        PrintWriter pr = new PrintWriter(s.getOutputStream());
+        pr.println("Yes");
+        pr.flush();
+
+        s.close();
+        ss.close();
+    }
+}
+
+
+
+
+
+
