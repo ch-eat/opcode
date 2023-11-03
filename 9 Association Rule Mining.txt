@@ -1,0 +1,58 @@
+Association Rule Mining : Association Rule Mining is a data mining technique used to discover interesting and meaningful relationships, associations, or patterns in large datasets. It identifies rules that describe the co-occurrence or dependency between items in a dataset. These rules can reveal hidden insights, such as which products are frequently bought together in retail, or which words often appear together in text documents. Association Rule Mining is commonly applied in market basket analysis, recommendation systems, and more.
+
+
+
+
+code :
+
+1.	Step 1: Import Required Libraries 
+
+import pandas as pd 
+from mlxtend.preprocessing import TransactionEncoder 
+from mlxtend.frequent_patterns import apriori 
+from mlxtend.frequent_patterns import association_rules 
+
+
+2.	Step 2 : Create the Dataset 
+
+data = [['Video Lectures', 'Assignments', 'Discussions'], 
+        ['Video Lectures', 'Online Course', 'Assignments', 'Discussions'], 
+        ['Online Course', 'Assignments', 'Announcements'], 
+        ['Video Lectures', 'Online Course', 'Assignments'], 
+        ['Online Course', 'Assignments', 'Discussions', 'Announcements'], 
+        ['Online Course', 'Discussions', 'Announcements'], 
+        ['Video Lectures', 'Assignments', 'Announcements', 'Discussions'], 
+        ['Video Lectures', 'Online Course', 'Assignments'], 
+        ['Online Course', 'Assignments', 'Discussions'], 
+        ['Video Lectures', 'Online Course', 'Discussions', 'Announcements']] 
+df = pd.DataFrame({'items': data})  
+
+
+3.	Step 3 : Convert Transactions to One-Hot Encoded DataFrame 
+
+# Convert transactions to one-hot encoded DataFrame 
+te = TransactionEncoder() 
+te_ary = te.fit_transform(df['items']) 
+one_hot_df = pd.DataFrame(te_ary, columns=te.columns_) 
+
+4.	Step 4 : Generate Frequent Itemsets 
+
+#Generate frequent itemsets with minimum support of 0.5 
+frequent_itemsets = apriori(one_hot_df, min_support=0.5, use_colnames=True) 
+
+
+5.	Step 5 : Generate Association Rules and Print the Output 
+
+# Generate association rules with a minimum confidence of 0.7 
+rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.7) 
+
+
+6.	Step 6: Print the output : 
+
+for index, row in rules.iterrows(): 
+    print("Rule: " + str(set(row['antecedents'])) + " -> " + str(set(row['consequents'])))     
+    print("Support: " + str(row['support']))     
+    print("Confidence: " + str(row['confidence'])) 
+    print("Lift: " + str(row['lift'])) 
+    print("=====================================") 
+

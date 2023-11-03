@@ -1,0 +1,46 @@
+EXPERIMENT NO:- 4
+Aim:- Implementation of Bayesian algorithm.
+
+Theory: 
+A Bayesian algorithm is a computational method or procedure that applies Bayesian principles to solve problems, make predictions, or perform statistical analysis. It leverages Bayes' theorem and Bayesian inference to update beliefs, estimate probabilities, or perform various tasks, often in the context of machine learning, statistics, and decision-making. The key characteristic of Bayesian algorithms is their use of prior knowledge or beliefs, incorporation of new evidence, and the calculation of posterior probabilities to make informed decisions or predictions. These algorithms are used in a wide range of applications, including Bayesian networks, Bayesian classification, Bayesian regression, and Bayesian optimization, among others.
+
+Program:-
+
+# Import LabelEncoder from sklearn
+from sklearn import preprocessing
+
+# Assigning features and label variables
+Weather = ['Sunny', 'Sunny', 'Overcast', 'Rainy', 'Rainy', 'Rainy', 'Overcast', 'Sunny', 'Sunny', 'Rainy', 'Sunny', 'Overcast', 'Overcast', 'Rainy']
+Temp = ['Hot', 'Hot', 'Hot', 'Mild', 'Cool', 'Cool', 'Cool', 'Mild', 'Cool', 'Mild', 'Mild', 'Mild', 'Hot', 'Mild']
+Play = ['No', 'No', 'Yes', 'Yes', 'Yes', 'No', 'Yes', 'No', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'No']
+
+# Creating labelEncoder
+le = preprocessing.LabelEncoder()
+
+# Converting string labels into numbers.
+weather_encoded = le.fit_transform(Weather)
+print("Weather Encoded:", weather_encoded)
+
+temp_encoded = le.fit_transform(Temp)
+print("Temp Encoded:", temp_encoded)
+
+label = le.fit_transform(Play)
+print("Play Encoded:", label)
+
+# Combining weather and temp into a single list of tuples
+features = list(zip(weather_encoded, temp_encoded))
+print("Features:", features)
+
+# Import Gaussian Naive Bayes model from sklearn
+from sklearn.naive_bayes import GaussianNB
+
+# Create a Gaussian Classifier
+model = GaussianNB()
+
+# Train the model using the training sets
+model.fit(features, label)
+
+# Predict Output
+predicted = model.predict([[0, 2]])  # 0: Overcast, 2: Mild
+print("Predicted Value:", predicted)
+

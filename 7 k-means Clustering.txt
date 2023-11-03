@@ -1,0 +1,96 @@
+
+K-Means Clustering:
+
+Divides data into 'K' clusters based on centroids.
+Data points belong to the nearest centroid.
+Iteratively updates centroids until convergence.
+Sensitive to outliers.
+Efficient for large datasets.
+Used for customer segmentation, image compression, and more.
+
+K-Medoids Clustering:
+
+Divides data into 'K' clusters using actual data points as medoids.
+Minimizes dissimilarity between data points and medoids.
+Robust to outliers.
+Can be computationally intensive for large datasets.
+Suitable for categorical data and text document clustering.
+Also known as Partitioning Around Medoids (PAM).
+
+
+program:k means
+
+import numpy as np
+
+def main():
+    numbers = int(input("How many numbers you want to enter: "))
+    k = int(input("Enter value of k: "))
+    kvals = np.zeros(25, dtype=int)
+    prevKvals = np.zeros(25, dtype=int)
+    nums = np.zeros(100, dtype=int)
+    addition = np.zeros((25, 100), dtype=int)
+    groups = np.zeros((25, 100), dtype=int)
+    ok = 1
+    steps = 1
+
+    # Get input numbers
+    for i in range(numbers):
+        nums[i] = int(input(f"Enter Number {i + 1}:"))
+
+    # Set initial values of C's
+    for i in range(k):
+        kvals[i] = nums[i]
+
+    while ok == 1:
+        print("\nIteration Number:", steps)
+
+        # Make calculations
+        for i in range(k):
+            for j in range(numbers):
+                addition[i][j] = abs(kvals[i] - nums[j])
+
+        # Make groups of numbers (C)
+        for i in range(numbers):
+            min_val = 100000
+            group_num = 0  # Initialize group_num here
+            for j in range(k):
+                if addition[j][i] < min_val:
+                    min_val = addition[j][i]
+                    group_num = j
+            groups[group_num][i] = nums[i]
+
+        # Show results of calculations
+        print("\nCalculations")
+        for i in range(numbers):
+            for j in range(k):
+                print(addition[j][i], end='\t')
+            print()
+
+        # Show groups and calculate new C's
+        print("\nGroups")
+        for i in range(k):
+            sum_val = 0
+            count = 0
+            print(f"Group {i + 1}: ", end='')
+            for j in range(numbers):
+                if groups[i][j] != 0:
+                    print(groups[i][j], end='\t')
+                    sum_val += groups[i][j]
+                    count += 1
+            prevKvals[i] = kvals[i]
+            kvals[i] = sum_val // count
+            print(f" = {kvals[i]}")
+
+        # Clear the array of groups
+        groups = np.zeros((25, 100), dtype=int)
+
+        # Check the termination condition
+        ok = 0
+        for i in range(k):
+            if prevKvals[i] != kvals[i]:
+                ok = 1
+
+        steps += 1
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,95 @@
+Problem Statement:(Car Sales Analysis)
+
+"A car dealership wants to analyze its sales performance and gain valuable insights into its business operations. The dealership has been collecting data on car sales over the past few years, including information about the cars sold, the dates of sales, and the locations of the buyers. The management wants to understand the factors that influence sales, identify top-performing car models and dealerships, and optimize their marketing and sales strategies.
+Develop a star schema for car sales with dimensions: "Time," "Car," and "Location," connected to the fact table "CarSales." Time dimension includes day, month, year, and quarter; Car dimension includes make, model, year, and color; Location dimension includes country, city, state/province, and dealership names. Analyze data to determine top-selling car models per quarter, highest revenue dealerships in cities, sales performance by car color, overall sales trend over three years, and regional variations. Present insights through clear visualizations and reports. Success measured by accurate insights, efficient data retrieval, and quality of visualizations. Ensure flexibility for future data updates and changing business needs. Deliverables: star schema design, data analytics solution, and comprehensive report with insights and recommendations.
+
+Star Schema:
+
+1. Time Dimension:
+   - Date Key (Primary Key)
+   - Date
+   - Day
+   - Month
+   - Year
+   - Quarter
+   - ...
+
+2. Car Dimension:
+   - Car Key (Primary Key)
+   - Make
+   - Model
+   - Year
+   - Color
+   - ...
+
+3. Location Dimension:
+   - Location Key (Primary Key)
+   - Country
+   - City
+   - State/Province
+   - Dealership Name
+   - ...
+
+4. CarSales Fact Table:
+   - Sale ID (Primary Key)
+   - Date Key (Foreign Key referencing Time Dimension)
+   - Car Key (Foreign Key referencing Car Dimension)
+   - Location Key (Foreign Key referencing Location Dimension)
+   - Quantity Sold
+   - Sales Amount
+   - Discount
+   - ...
+
+
+
+
+Snowflake Schema:
+
+
+1. Time Dimension:
+   - Date Key (Primary Key)
+   - Date
+   - Day
+   - Month
+   - Year
+   - Quarter
+   - ...
+
+2. Car Dimension:
+   - Car Key (Primary Key)
+   - Make
+   - Model
+   - Year
+   - Color
+   - ...
+
+
+3. Location Country Dimension:
+   - Country Key (Primary Key)
+   - Country
+
+4. Location State Dimension:
+   - State/Province Key (Primary Key)
+   - State/Province
+   - Country Key (Foreign Key referencing Location Country Dimension)
+
+5. Location City Dimension:
+   - City Key (Primary Key)
+   - City
+   - State/Province Key (Foreign Key referencing Location State/Province Dimension)
+
+6. CarSales Fact Table:
+   - Sale ID (Primary Key)
+   - Date Key (Foreign Key referencing Time Dimension)
+   - Model Key (Foreign Key referencing Car Model Dimension)
+   - Color Key (Foreign Key referencing Car Color Dimension)
+   - Car Type Key (Foreign Key referencing Car Type Dimension)
+   - City Key (Foreign Key referencing Location City Dimension)
+   - Quantity Sold
+   - Sales Amount
+   - Discount
+   - ...
+
+
+
+

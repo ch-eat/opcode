@@ -1,0 +1,132 @@
+Experiment No:- 5
+
+Aim :- Implementation of Data Discretization (any one) & Visualization (any one)
+
+A) Data Discretization (Binning Method) :
+
+Program :- 
+
+import numpy as np
+
+# Load Iris dataset
+from sklearn.datasets import load_iris
+dataset = load_iris()
+a = dataset.data
+b = np.zeros(150)
+
+# Extract the 2nd column among 4 columns of the dataset
+for i in range(150):
+    b[i] = a[i, 1]
+
+# Sort the array
+b = np.sort(b)
+
+# Create bins
+bin1 = np.zeros((30, 5))
+bin2 = np.zeros((30, 5))
+bin3 = np.zeros((30, 5))
+
+# Bin mean
+for i in range(0, 150, 5):
+    k = int(i / 5)
+    mean = (b[i] + b[i + 1] + b[i + 3] + b[i + 4]) / 5
+    for j in range(5):
+        bin1[k, j] = mean
+
+print("Bin Mean: \n", bin1)
+
+# Bin boundaries
+for i in range(0, 150, 5):
+    k = int(i / 5)
+    for j in range(5):
+        if (b[i + j] - b[i]) < (b[i + 4] - b[i + j]):
+            bin2[k, j] = b[i]
+        else:
+            bin2[k, j] = b[i + 4]
+
+print("Bin Boundaries: \n", bin2)
+
+# Bin median
+for i in range(0, 150, 5):
+    k = int(i / 5)
+    for j in range(5):
+        bin3[k, j] = b[i + 2]
+
+print("Bin Median: \n", bin3)
+
+
+In this code, you first load the Iris dataset and extract the second column (index 1) from the data. Then, you sort the extracted column. Three sets of bins are created for mean, boundaries, and median.
+
+bin1 represents the mean values within each bin.
+bin2 represents the boundaries of each bin.
+bin3 represents the median values within each bin.
+The code calculates these values based on the data in column 2 and prints the results.
+
+Data discretization is a preprocessing technique used to convert continuous data into discrete intervals or bins. It can help reduce the impact of noise and make data analysis easier. In this code, the "binning method" is used to discretize data by dividing it into bins and calculating statistics like mean, boundaries, and median within each bin.
+
+
+B) Data Visualization :-
+I)	Scatter Plot : A scatter plot is a type of data visualization that displays individual data points as dots (or markers) on a two-dimensional plane. It is commonly used to explore and depict the relationship or distribution between two continuous variables.
+
+
+
+import matplotlib.pyplot as plt
+
+# Attendance data for girls and boys
+girls_attendance = [25, 28, 18, 19, 28, 29, 26, 17, 27, 11]
+boys_attendance = [16, 18, 26, 26, 21, 18, 26, 25, 22, 26]
+
+# Days range for the x-axis
+days_range = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# Create a figure and axis
+fig = plt.figure()
+ax = fig.add_axes([0, 0, 1, 1])
+
+# Create scatter plots for girls and boys attendance
+ax.scatter(days_range, girls_attendance, color='r', label='Girls')
+ax.scatter(days_range, boys_attendance, color='b', label='Boys')
+
+# Set labels and title
+ax.set_xlabel('Days Range')
+ax.set_ylabel('Attendance')
+ax.set_title('Scatter Plot')
+
+# Display a legend to distinguish between girls and boys data
+ax.legend()
+
+# Show the plot
+plt.show()
+
+
+II)	Histogram :-
+A histogram is a graphical representation of the distribution of a dataset. It displays the frequency or count of data points falling into various intervals, which are called "bins." Histograms are used to visualize the underlying frequency distribution of a continuous or discrete variable.
+
+import matplotlib.pyplot as plt
+
+# Attendance data for girls and boys
+girls_attendance = [25, 28, 18, 19, 28, 29, 26, 17, 27, 11]
+boys_attendance = [16, 18, 26, 26, 21, 18, 26, 25, 22, 26]
+
+# Create a figure and a set of subplots (1 row, 2 columns)
+fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+
+# Plot histogram for girls' attendance
+axs[0].hist(girls_attendance, bins=5, color='r', alpha=0.7, edgecolor='black')
+axs[0].set_xlabel('Attendance')
+axs[0].set_ylabel('Frequency')
+axs[0].set_title('Girls Attendance Histogram')
+
+# Plot histogram for boys' attendance
+axs[1].hist(boys_attendance, bins=5, color='b', alpha=0.7, edgecolor='black')
+axs[1].set_xlabel('Attendance')
+axs[1].set_ylabel('Frequency')
+axs[1].set_title('Boys Attendance Histogram')
+
+# Adjust layout for better presentation
+plt.tight_layout()
+
+# Show the plot
+plt.show()
+
+ 
