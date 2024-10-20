@@ -1,0 +1,50 @@
+
+-- Create a new database
+CREATE DATABASE IF NOT EXISTS bigdata_db;
+
+-- Use the database
+USE bigdata_db;
+
+-- Create a new table
+CREATE TABLE IF NOT EXISTS students (
+  id INT,
+  name STRING,
+  age INT,
+  course STRING
+) 
+
+-- Insert dummy data directly into the table (instead of loading from a file)
+INSERT INTO students (id, name, age, course) VALUES 
+(1, 'John', 22, 'Big Data Analytics'),
+(2, 'Jane', 23, 'Data Science'),
+(3, 'Doe', 21, 'Artificial Intelligence');
+
+-- Retrieve all data from the table
+SELECT * FROM students;
+
+-- Update data: Set John's age to 24 (since Hive doesn't directly support UPDATE, we use INSERT OVERWRITE)
+INSERT OVERWRITE TABLE students 
+SELECT id, name, 
+       CASE WHEN name = 'John' THEN 24 ELSE age END AS age, 
+       course 
+FROM students;
+
+-- Delete data: Remove the row where the name is 'John' (DELETE is not directly supported in Hive)
+INSERT OVERWRITE TABLE students 
+SELECT * FROM students WHERE name != 'John';
+
+
+
+
+
+
+Hive Commands (CRUD Operations)
+Hive is a data warehouse infrastructure built on top of Hadoop. It allows users to query large datasets stored in HDFS using a SQL-like language called HiveQL.
+
+CRUD operations in Hive:
+Create: Create databases and tables using CREATE.
+Read: Query data using SELECT.
+Update: Updates are done using INSERT OVERWRITE, as Hive doesn’t support direct updates.
+Delete: Deletion is achieved by overwriting the table using INSERT OVERWRITE, as Hive lacks direct delete operations.
+
+

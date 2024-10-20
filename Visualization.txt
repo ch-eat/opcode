@@ -1,0 +1,39 @@
+!sudo apt-get install r-base
+!pip install rpy2
+%load_ext rpy2.ipython
+
+
+
+%%R
+# Generate 100 random numbers between 1 and 50
+random_numbers <- sample(1:50, 100, replace=TRUE)
+
+# Create a simple histogram
+hist(random_numbers,
+     main="Histogram of Random Numbers",
+     xlab="Random Numbers",
+     col="lightblue",
+     border="black")
+
+
+
+%%R
+# Example: Simple line plot of numbers
+x <- 1:10
+y <- x^2  # y is the square of x
+
+plot(x, y, type="l",  # 'l' indicates a line plot
+     col="red",
+     main="Line Plot: x vs x^2",
+     xlab="x",
+     ylab="x^2")
+
+
+
+
+R, combined with the ggplot2 library, is widely used for data visualization. It helps in creating elegant, publication-quality visualizations such as bar plots, histograms, scatter plots, etc.
+
+ggplot2: A data visualization package in R that follows the "grammar of graphics" to create visualizations:
+geom_bar: Creates bar plots for categorical data.
+aes: Specifies aesthetic mappings such as x, y axes.
+ggtitle, xlab, ylab: Used to add titles and labels to the plots.

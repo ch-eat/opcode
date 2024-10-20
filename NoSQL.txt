@@ -1,0 +1,78 @@
+mongo
+
+use myDatabase
+
+db.createCollection("myCollection")
+
+db.myCollection.insertMany([
+  { name: "Alice", age: 25, city: "New York" },
+  { name: "Bob", age: 30, city: "Los Angeles" }
+])
+
+db.myCollection.insertOne({ name: "Charlie", age: 35, city: "Chicago" })
+
+db.myCollection.find()
+
+db.myCollection.updateOne({ name: "Alice" }, { $set: { age: 26 } })
+
+db.myCollection.deleteOne({ name: "Bob" })
+
+db.myCollection.find()
+
+db.myCollection.drop()
+
+db.dropDatabase()
+
+
+
+
+
+
+NoSQL Commands (MongoDB and HBase)
+MongoDB is a document-based NoSQL database that stores data in JSON-like format, offering flexibility for unstructured data.
+
+CRUD operations:
+Create: insert documents into collections.
+Read: find documents from the collection.
+Update: Modify existing documents using update.
+Delete: Remove documents using remove
+
+
+
+
+
+HBASE:
+
+# Open HBase shell
+hbase shell
+
+# Create a new table with two column families: 'personal' and 'academic'
+create 'students', 'personal', 'academic'
+
+# Insert data into a specific row and column family
+put 'students', '1', 'personal:name', 'John'
+put 'students', '1', 'personal:age', '22'
+put 'students', '1', 'academic:course', 'Big Data Analytics'
+
+# Retrieve data from a specific row
+get 'students', '1'
+# Fetches the entire row with key '1' from the 'students' table.
+
+# Update an existing cell in the table
+put 'students', '1', 'personal:age', '23'
+
+# Delete data from a specific column
+delete 'students', '1', 'personal:age'
+# Deletes the `age` column for the row '1'.
+
+# List all tables in HBase
+list
+
+
+HBase is a column-family-based NoSQL database designed to store massive amounts of sparse data across distributed systems.
+
+CRUD operations:
+Create: create tables and put data into them.
+Read: get data from tables.
+Update: put can also update data.
+Delete: delete removes data from cells.

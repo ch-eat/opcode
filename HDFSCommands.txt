@@ -16,3 +16,17 @@ hdfs dfs -rm /user/data/localfile.txt
 
 # View the contents of a file in HDFS
 hdfs dfs -cat /user/data/file.txt
+
+
+
+
+
+1. HDFS Basic Commands
+HDFS (Hadoop Distributed File System) is the storage layer of Hadoop, designed for large-scale distributed storage. It breaks large files into smaller blocks and distributes them across a cluster of machines.
+
+mkdir: Creates directories in HDFS.
+ls: Lists files in a specified HDFS directory.
+put: Uploads files from the local system to HDFS.
+get: Downloads files from HDFS to the local system.
+rm: Deletes files from HDFS.
+cat: Displays the content of files stored in HDFS.
