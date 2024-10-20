@@ -1,0 +1,18 @@
+
+# Create a new directory in HDFS
+hdfs dfs -mkdir /user/data
+
+# List files in HDFS directory
+hdfs dfs -ls /user/
+
+# Upload a file to HDFS
+hdfs dfs -put /home/localfile.txt /user/data/
+
+# Download a file from HDFS to local file system
+hdfs dfs -get /user/data/localfile.txt /home/
+
+# Remove a file from HDFS
+hdfs dfs -rm /user/data/localfile.txt
+
+# View the contents of a file in HDFS
+hdfs dfs -cat /user/data/file.txt
