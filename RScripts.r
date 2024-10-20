@@ -1,3 +1,8 @@
+!sudo apt-get install r-base
+!pip install rpy2
+%load_ext rpy2.ipython
+
+
 %%R
 # Basic arithmetic operations in R
 a <- 10
