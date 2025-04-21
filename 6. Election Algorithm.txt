@@ -1,0 +1,68 @@
+🔹 Theory:
+The Bully Algorithm is a leader election method used in distributed systems to select a new coordinator when the current one fails. It works by having the process with the highest ID that is still active become the coordinator. Lower-ID processes initiate the election, and higher-ID processes “bully” them until the highest one takes over.
+
+✅ Advantages:
+Simple and easy to understand.
+
+Guarantees selection of the highest-priority node.
+
+Works well in static networks with known node IDs.
+
+❌ Disadvantages:
+Generates high message overhead in large systems.
+
+Does not scale well with many nodes.
+
+Assumes reliable message delivery.
+
+🔚 Conclusion:
+The Bully Algorithm effectively ensures that the highest active process becomes the leader, maintaining control and coordination in a distributed system after failure.
+
+
+*****code*****
+import time
+
+class Process:
+    def __init__(self, pid, is_active=True):
+        self.pid = pid
+        self.is_active = is_active
+
+    def send_election_message(self, to_process):
+        print(f"Process {self.pid} sends ELECTION to Process {to_process.pid}")
+        time.sleep(0.2)
+
+    def send_coordinator_message(self, to_process):
+        print(f"Process {self.pid} sends COORDINATOR to Process {to_process.pid}")
+        time.sleep(0.2)
+
+# Number of processes
+num_processes = 5
+
+# Initialize processes (let's say Process 4 fails)
+processes = [Process(i, is_active=(i != 4)) for i in range(num_processes)]
+
+print("Processes:", [p.pid for p in processes])
+print("Process 4 is failed.")
+initiator = 1
+print(f"Election initiated by Process {initiator}\n")
+
+# Election process starts from initiator
+for i in range(initiator + 1, num_processes):
+    if processes[i].is_active:
+        processes[initiator].send_election_message(processes[i])
+
+# Determine new coordinator (highest active PID)
+new_coordinator = None
+for i in range(num_processes - 1, -1, -1):
+    if processes[i].is_active:
+        new_coordinator = processes[i]
+        break
+
+print(f"\nProcess {new_coordinator.pid} is elected as COORDINATOR\n")
+
+# Coordinator sends message to all lower processes
+for i in range(new_coordinator.pid):
+    if processes[i].is_active:
+        new_coordinator.send_coordinator_message(processes[i])
+
+print("Election completed.")

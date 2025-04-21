@@ -1,0 +1,46 @@
+🔹 Theory:
+Load balancing is a technique to evenly distribute incoming requests among multiple servers or processes to avoid overload and ensure optimal use of system resources. The Round Robin algorithm is a simple and effective method where each request is assigned to the next server in a cyclic manner.
+
+✅ Advantages:
+Prevents overloading of a single server.
+
+Improves responsiveness and efficiency.
+
+Increases system availability and fault tolerance.
+
+❌ Disadvantages:
+May not account for individual server capacity.
+
+Static rotation can be inefficient under variable loads.
+
+Needs a controller or coordinator to manage distribution.
+
+🔚 Conclusion:
+Load balancing plays a crucial role in improving the performance and reliability of distributed systems by ensuring fair distribution of tasks among available servers.
+
+
+*****code******
+
+import itertools
+
+class LoadBalancer:
+    def __init__(self, servers):
+        # Cycle through the list of servers
+        self.servers = itertools.cycle(servers)
+
+    def get_next_server(self):
+        # Get the next server in the cycle
+        return next(self.servers)
+
+if __name__ == '__main__':
+    # List of available servers
+    servers = ['Server1', 'Server2', 'Server3']
+
+    # Create load balancer
+    lb = LoadBalancer(servers)
+
+    # Simulate 10 client requests
+    print("Round Robin Load Balancing:")
+    for i in range(1, 11):
+        selected_server = lb.get_next_server()
+        print(f"Request {i} is handled by {selected_server}")

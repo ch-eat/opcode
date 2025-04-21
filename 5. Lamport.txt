@@ -1,0 +1,75 @@
+🔹 Theory:
+Lamport's Logical Clock is a method to assign timestamps to events in a distributed system to determine the order of events. Since distributed systems lack a global clock, this method ensures causal ordering using logical counters. Each event increments the clock, and when messages are exchanged, timestamps are compared and updated.
+
+✅ Advantages:
+Ensures correct event ordering in distributed systems.
+
+Simple and lightweight to implement.
+
+No need for physical clock synchronization.
+
+❌ Disadvantages:
+Only ensures partial ordering, not total.
+
+Cannot distinguish concurrent events with the same timestamp.
+
+Does not handle real-time synchronization.
+
+🔚 Conclusion:
+Lamport’s Logical Clock is a foundational tool in distributed systems for achieving causal ordering of events and coordinating actions across processes.
+
+
+
+*****code******
+class LamportClock:
+    def __init__(self):
+        self.time = 0  # Initial logical clock
+
+    def tick(self):
+        # Local event: increment clock
+        self.time += 1
+
+    def send_event(self):
+        # Send event: return current time
+        self.tick()
+        return self.time
+
+    def receive_event(self, received_time):
+        # Receive event: update local time
+        self.time = max(self.time, received_time) + 1
+
+    def get_time(self):
+        return self.time
+
+# Simulate two processes
+if __name__ == "__main__":
+    p1 = LamportClock()
+    p2 = LamportClock()
+
+    print("Initial Times:")
+    print("P1:", p1.get_time(), "P2:", p2.get_time())
+
+    # P1 does an internal event
+    p1.tick()
+    print("\nP1 performs local event. Time:", p1.get_time())
+
+    # P1 sends message to P2
+    sent_time = p1.send_event()
+    print("P1 sends message at time:", sent_time)
+
+    # P2 receives message
+    p2.receive_event(sent_time)
+    print("P2 receives message. Updated time:", p2.get_time())
+
+    # P2 performs a local event
+    p2.tick()
+    print("P2 performs local event. Time:", p2.get_time())
+
+    # P2 sends back message to P1
+    sent_time2 = p2.send_event()
+    print("P2 sends message at time:", sent_time2)
+
+    # P1 receives reply
+    p1.receive_event(sent_time2)
+    print("P1 receives reply. Updated time:", p1.get_time())
+

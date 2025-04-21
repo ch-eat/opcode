@@ -1,0 +1,78 @@
+🔹 Theory:
+Remote Method Invocation (RMI) is a Java API that enables an object running in one Java Virtual Machine (JVM) to call methods on another object located in a different JVM. It supports true object-oriented remote procedure calls. RMI abstracts the complexities of network communication, allowing developers to build distributed applications easily using Java objects.
+
+✅ Advantages:
+Allows object-based remote communication.
+
+Platform-independent and secure (Java-based).
+
+Simplifies distributed application development.
+
+❌ Disadvantages:
+Works only with Java, no cross-language support.
+
+Slight performance overhead due to network latency.
+
+Debugging distributed errors is harder.
+
+🔚 Conclusion:
+Java RMI simplifies building distributed systems in Java by enabling method calls on remote objects as if they were local.
+
+
+*****SimpleServer.java*****
+import java.io.*;
+import java.net.*;
+public class SimpleServer {
+ public static void main(String[] args) {
+ int port = 12345; // You can choose any port from 1024 to 65535
+ try (ServerSocket serverSocket = new ServerSocket(port)) {
+ System.out.println("Server is running on port " + port);
+
+ while (true) {
+ try (Socket clientSocket = serverSocket.accept();
+ BufferedReader in = new BufferedReader(new
+InputStreamReader(clientSocket.getInputStream()));
+ PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+ String inputLine = in.readLine();
+ System.out.println("Received from client: " + inputLine);
+ String response = "Server received: " + inputLine;
+ out.println(response);
+ } catch (IOException e) {
+ System.err.println("Error interacting with client: " + e.getMessage());
+ }
+ }
+ } catch (IOException e) {
+ System.err.println("Could not listen on port: " + port);
+ System.exit(1);
+ }
+ }
+}
+
+
+
+
+
+
+****SimpleClient******
+import java.io.*;
+import java.net.*;
+public class SimpleClient {
+ public static void main(String[] args) {
+ String host = "localhost"; // Server address
+ int port = 12345; // The same port number used by the server
+ try (Socket socket = new Socket(host, port);
+ PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+ BufferedReader in = new BufferedReader(new
+InputStreamReader(socket.getInputStream()))) {
+
+ String message = "Hello, Server!";
+ out.println(message); // Send a message to the server
+ System.out.println("Sent to server: " + message);
+
+ String response = in.readLine(); // Read the response from the server
+ System.out.println("Response from server: " + response);
+ } catch (IOException e) {
+ System.err.println("Error connecting to the server: " + e.getMessage());
+ }
+ }
+}

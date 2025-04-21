@@ -1,0 +1,96 @@
+
+
+*********server.py************
+import socket
+import threading
+
+clients = []
+
+def broadcast(message, client_socket):
+    for client in clients:
+        if client != client_socket:
+            try:
+                client.send(message)
+            except:
+                clients.remove(client)
+
+def handle_client(client_socket):
+    try:
+        while True:
+            message = client_socket.recv(1024)
+            if not message:
+                break
+            print(f"Received message: {message.decode('utf-8')}")
+            broadcast(message, client_socket)
+    except:
+        pass
+    finally:
+        clients.remove(client_socket)
+        client_socket.close()
+
+def start_server(host, port):
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.bind((host, port))
+    server_socket.listen(5)
+    print(f"Server started at {host}:{port}...")
+
+    while True:
+        client_socket, client_address = server_socket.accept()
+        print(f"New connection from {client_address}")
+        clients.append(client_socket)
+        threading.Thread(target=handle_client, args=(client_socket,)).start()
+
+print("Server Running")
+start_server('192.168.211.232', 12345)  # Replace with your actual server IP
+
+
+🔹 Theory:
+Group communication allows a process to send a message to a group of processes simultaneously (multicast), instead of sending individual messages. It is widely used in distributed systems for tasks like broadcasting updates, group coordination, and collaborative processing.
+
+✅ Advantages:
+Efficient and fast data broadcasting.
+
+Reduces network traffic compared to unicast.
+
+Supports real-time updates in distributed systems.
+
+❌ Disadvantages:
+Difficult to manage consistency in large groups.
+
+Susceptible to message loss in unreliable networks.
+
+Complex error handling during message delivery.
+
+🔚 Conclusion:
+Group communication is vital in distributed systems to ensure that all members receive updates or instructions at the same time, promoting synchronization and consistency.
+
+
+
+*******client.py************
+import socket
+import threading
+
+def listen_for_messages(client_socket):
+    while True:
+        try:
+            message = client_socket.recv(1024)
+            if not message:
+                break
+            print(f"New message: {message.decode('utf-8')}")
+        except:
+            break
+
+def send_message(client_socket):
+    while True:
+        message = input("Enter message to send: ")
+        if message:
+            client_socket.send(message.encode('utf-8'))
+
+def start_client(host, port):
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    client_socket.connect((host, port))
+    threading.Thread(target=listen_for_messages, args=(client_socket,)).start()
+    threading.Thread(target=send_message, args=(client_socket,)).start()
+
+start_client('192.168.211.232', 12345)  # Replace with your actual server IP
+
